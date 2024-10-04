@@ -1,14 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { useParams } from 'react-router-dom';
-import axios from 'axios'; // Import axios for making HTTP requests
+import axios from 'axios';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = 'https://ugpifdpzvmupzfdejpbv.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVncGlmZHB6dm11cHpmZGVqcGJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjgwMjgzNDEsImV4cCI6MjA0MzYwNDM0MX0.0PHU_w4FXGb_TOj5wYIIAHLtT1ficXlbOWMCuc7BJdw';
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const JoinCallPage = () => {
     const { roomId } = useParams();
-    const mediaRecorderRef = useRef(null); // Reference to MediaRecorder
-    const audioChunks = useRef([]); // Store audio chunks
-    const audioUrlRef = useRef(null); // Reference to store the audio URL for playback
-    const [transcription, setTranscription] = useState(""); // State to store transcription text
+    const mediaRecorderRef = useRef(null);
+    const audioChunks = useRef([]);
+    const audioUrlRef = useRef(null);
+    const [transcription, setTranscription] = useState("");
 
     const myMeeting = async (element) => {
         const appID = 752328650;
@@ -29,7 +34,6 @@ const JoinCallPage = () => {
             },
         });
 
-        // Start audio recording
         startAudioRecording();
     };
 
@@ -38,16 +42,16 @@ const JoinCallPage = () => {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorderRef.current = new MediaRecorder(stream);
             mediaRecorderRef.current.ondataavailable = (event) => {
-                audioChunks.current.push(event.data); // Collect audio data
+                audioChunks.current.push(event.data);
             };
 
             mediaRecorderRef.current.onstop = () => {
                 const audioBlob = new Blob(audioChunks.current, { type: 'audio/wav' });
-                audioUrlRef.current = URL.createObjectURL(audioBlob); // Store audio URL for playback
-                audioChunks.current = []; // Clear the audio chunks after playing
+                audioUrlRef.current = URL.createObjectURL(audioBlob);
+                audioChunks.current = [];
 
-                // Send the audio to the server for transcription
-                transcribeAudio(audioBlob);
+               // transcribeAudio(audioBlob);
+                uploadAudioToSupabase(audioBlob);
             };
 
             mediaRecorderRef.current.start();
@@ -58,14 +62,14 @@ const JoinCallPage = () => {
 
     const stopAudioRecording = () => {
         if (mediaRecorderRef.current) {
-            mediaRecorderRef.current.stop(); // Stop recording
+            mediaRecorderRef.current.stop();
         }
     };
-
+  
     const playRecordedAudio = () => {
         if (audioUrlRef.current) {
             const audio = new Audio(audioUrlRef.current);
-            audio.play(); // Play the recorded audio
+            audio.play();
         } else {
             console.log("No audio recorded yet.");
         }
@@ -73,32 +77,52 @@ const JoinCallPage = () => {
 
     const transcribeAudio = async (audioBlob) => {
         const formData = new FormData();
-        formData.append('file', audioBlob, 'audio.wav'); // Append audio file to FormData
+        formData.append('file', audioBlob, 'audio.wav');
 
         try {
             const response = await axios.post('http://localhost:3000/transcribe', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+                headers: { 'Content-Type': 'multipart/form-data' },
             });
-            setTranscription(response.data.text); // Set the transcription state
+            setTranscription(response.data.text);
         } catch (error) {
             console.error('Error during transcription:', error.response ? error.response.data : error);
-            res.status(500).send({ error: 'Transcription failed' });
-        }        
+        }
     };
+
+    const uploadAudioToSupabase = async (audioBlob) => {
+        console.log(audioBlob);
+        const fileName = `public/audio-${Date.now()}.wav`; // Ensure the file path is correct
+        const { data, error } = await supabase
+            .storage
+            .from('Audio') // Ensure the bucket name is correct
+            .upload(fileName, audioBlob, {
+                cacheControl: '3600',
+                upsert: false,
+                contentType: 'audio/wav' // Set MIME type explicitly
+            });
+    
+        if (error) {
+            console.error('Error uploading audio to Supabase:', error.message);
+        } else {
+            console.log('Audio uploaded to Supabase:', data);
+        }
+    };
+    
+    
 
     useEffect(() => {
         return () => {
-            stopAudioRecording(); // Stop recording when component unmounts
+            stopAudioRecording();
         };
     }, []);
 
     return (
-        <div className='bg-blue-600 flex justify-center items-center'>
-            <div ref={myMeeting}></div>
-            <button onClick={stopAudioRecording} className='bg-green-500'>Stop Recording</button>
-            <button onClick={playRecordedAudio}>Play Recorded Audio</button>
+        <div className='flex flex-col justify-center items-center h-screen gap-8'>
+            <div ref={myMeeting} className='p-4 rounded-xl'></div>
+            <div className='flex gap-4 text-xl'>
+                <button onClick={stopAudioRecording} className='bg-red-500 rounded-xl p-2'>Stop Recording</button>
+                <button onClick={playRecordedAudio} className='bg-green-500 rounded-xl p-2'>Play Recorded Audio</button>
+            </div>
             {transcription && <div className="transcription">Transcription: {transcription}</div>}
         </div>
     );
