@@ -52,11 +52,11 @@ function ChatpdfSidebar({ isOpen, toggleSidebar }) {
                     <img src={robot} alt="Robot" className="mb-5 h-72" />
                     <div className="text-center">
                         <h1 className={`text-2xl flex items-center justify-center gap-4 font-bold mb-4 leading-5 ${expanded ? '' : 'hidden'}`}>
-                            <FaFileDownload size={35} className="text-yellow-400" />
+                            <FaFileDownload size={35} className="text-purple-400" />
                             PDF File's Section
                         </h1>
-                        <div className={`${expanded ? 'bg-gray-100' : 'bg-gray-400'} rounded-xl w-80 p-1 ml-3`}>
-                            <div className="text-xs">Drag and drop the file here</div>
+                        <div className={`${expanded ? 'bg-purple-400' : 'bg-gray-400'} rounded-xl w-80 p-1 ml-3`}>
+                            <div className="text-md font-semibold text-black">Drag and drop the file here</div>
                             <input 
                                 type="file" 
                                 multiple 
@@ -65,16 +65,16 @@ function ChatpdfSidebar({ isOpen, toggleSidebar }) {
                             />
                             <div className="my-3 flex items-center justify-center">
                                 {compUp ? (
-                                    <div className="border-2 text-sm rounded-lg border-green-500 p-1 bg-green-200">Processed</div>
+                                    <div className="text-md p-3 rounded-lg  border-green-500 p-3 bg-green-700">Processed</div>
                                 ) : (
-                                    <div className="border-2 text-sm rounded-lg border-red-600 p-1 bg-red-300">Not Processed</div>
+                                    <div className=" text-md p-3  rounded-lg   bg-red-500">Not Processed</div>
                                 )}
                             </div>
                         </div>
                         <p className={`text-xs  m-4 ${expanded ? '' : 'hidden'}`}>Upload your PDF Files & Click on the Upload Button</p>
                         <div className="flex items-center justify-center mt-2">
                             <button 
-                                className={`bg-gradient-to-r from-orange-200 to-orange-300 mb-1 text-white gap-2 flex py-2 px-4 rounded-lg w-80 items-center justify-center hover:bg-gradient-to-r hover:from-orange-300 hover:to-orange-400 ${expanded ? '' : 'hidden'}`} 
+                                className={`bg-purple-500 text-white gap-2 flex py-2 px-4 rounded-lg w-80 items-center justify-center hover:bg-gradient-to-r hover:bg-purple-600 ${expanded ? '' : 'hidden'}`} 
                                 onClick={handleUpload}
                             >
                                 Upload PDFs

@@ -1,10 +1,10 @@
 import './App.css';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Login from './pages/login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ChatPDF from './pages/ChatPdf';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from './UserContext';
 import Practice from './pages/Practice';
 import { ImSpinner3 } from "react-icons/im";
@@ -19,19 +19,28 @@ import JoinRoomPage from './pages/JoinRoomPage';
 import JoinCallPage from './pages/JoinCallPage';
 import Hero from './Hero';
 
-
 function App() {
   const { user, ready } = useContext(UserContext);
+  const location = useLocation();
+  const [direction, setDirection] = useState('next'); // Control the direction of the animation
 
   if (!ready) {
     return <div className='flex items-center w-full h-full justify-center gap-2 text-lg'><ImSpinner3 className='text-lg' />Loading...</div>;
   }
 
+  const handleNavigate = (to) => {
+    if (to === '/register') {
+      setDirection('next');
+    } else if (to === '/') {
+      setDirection('prev');
+    }
+  };
+
   return (
-      <Routes>
-       {/* <Route path='/' element={<Hero />} /> */}
-        <Route path='/' element={<Login />} />
-        <Route path='/register' element={<Register />} />
+    <div className={`app-container ${direction}`}>
+      <Routes location={location} key={location.key}>
+        <Route path='/' element={<Login onNavigate={() => handleNavigate('/register')} />} />
+        <Route path='/register' element={<Register onNavigate={() => handleNavigate('/')} />} />
         <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to='/' replace />} />
         <Route path="/dashboard/pdf" element={user ? <ChatPDF /> : <Navigate to='/' replace />} />
         <Route path="/practice-dost" element={user ? <Practice /> : <Navigate to='/' replace />} />
@@ -42,9 +51,10 @@ function App() {
         <Route path="/test" element={user ? <Test /> : <Navigate to='/' replace />} />
         <Route path="/gentest" element={user ? <TestGenerate /> : <Navigate to='/' replace />} />
         <Route path="/resource" element={user ? <Resource /> : <Navigate to='/' replace />} />
-        <Route path='/joinroom' element={<JoinRoomPage/>}/>
-        <Route path='/room/:roomId' element={<JoinCallPage/>}/>
+        <Route path='/joinroom' element={<JoinRoomPage />} />
+        <Route path='/room/:roomId' element={<JoinCallPage />} />
       </Routes>
+    </div>
   );
 }
 
