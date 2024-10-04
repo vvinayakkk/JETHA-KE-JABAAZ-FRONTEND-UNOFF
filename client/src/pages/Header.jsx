@@ -59,7 +59,7 @@ function Header({ sidebarOpen }) {
 
   return (
     <div
-      className={`shadow-md p-4 flex items-center justify-between border-b-4 fixed top-0 left-0 right-0 bg-white z-10 border-orange-400 transition-all duration-300 ${
+      className={`shadow-md p-4 flex items-center justify-between border-b-4 fixed top-0 left-0 right-0 bg-white z-10 transition-all duration-300 ${
         sidebarOpen ? 'ml-[196px]' : 'ml-[72px]'
       } header-container`}
       style={{
@@ -72,7 +72,7 @@ function Header({ sidebarOpen }) {
       </div>
       <div className="flex items-center">
         {/* Search Bar: Hidden on small screens */}
-        <div className="relative w-full max-w-xs rounded-full border border-orange-600 hidden sm:block">
+        <div className="relative w-full max-w-xs rounded-full border  hidden sm:block">
           <IoIosSearch size={24} className="absolute top-0 left-0 mt-2 ml-3 text-gray-400" />
           <input
             type="text"
@@ -93,7 +93,7 @@ function Header({ sidebarOpen }) {
         {isDropdownOpen && (
           <div className={`absolute top-[56px] right-4 sm:top-[64px] sm:right-4 border rounded-lg shadow-xl p-2 w-40 sm:w-48 bg-white `} style={theme === 'light' ? {} : { backgroundColor: "black", color: "white" }}>
             <ul className="space-y-2">
-              <li className="flex gap-2 m-1 items-center border-b-2 rounded border-gray-300 mb-3 cursor-pointer">
+              <li className="flex gap-2 m-1 items-center border-b-2 rounded  mb-3 cursor-pointer">
                 <div className="mb-2 flex gap-2">
                   <FaUserAlt className="text-md mt-1" />
                   <Link to="/profile">{user && (

@@ -15,6 +15,8 @@ import Notes from './pages/Notes';
 import Test from './pages/Test';
 import TestGenerate from './pages/TestGenerate';
 import Resource from './pages/Resource';
+import Hero from './Hero';
+
 
 function App() {
   const { user, ready } = useContext(UserContext);
@@ -25,6 +27,7 @@ function App() {
 
   return (
       <Routes>
+       {/* <Route path='/' element={<Hero />} /> */}
         <Route path='/' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to='/' replace />} />
