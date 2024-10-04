@@ -118,11 +118,11 @@ const JoinCallPage = () => {
 
     return (
         <div className='flex flex-col justify-center items-center h-screen gap-8'>
-            <div ref={myMeeting} className='p-4 rounded-xl'></div>
-            <div className='flex gap-4 text-xl'>
+            <div ref={myMeeting} className='h-full w-full rounded-xl'></div>
+            {/* <div className='flex gap-4 text-xl'>
                 <button onClick={stopAudioRecording} className='bg-red-500 rounded-xl p-2'>Stop Recording</button>
                 <button onClick={playRecordedAudio} className='bg-green-500 rounded-xl p-2'>Play Recorded Audio</button>
-            </div>
+            </div> */}
             {transcription && <div className="transcription">Transcription: {transcription}</div>}
         </div>
     );
