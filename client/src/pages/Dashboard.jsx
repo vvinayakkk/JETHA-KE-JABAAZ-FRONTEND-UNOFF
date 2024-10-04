@@ -20,7 +20,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex font-[Inter] font-semibold">
       <SideBarComp />
       <div className={`p-4 w-full mt-[76px] ${theme === 'light' ? '' : 'bg-black text-white'}`}>
         {/* Upper Section */}
@@ -39,12 +39,12 @@ function Dashboard() {
             <img src={Big} className="w-80 h-40 mr-28" />
           </div>
         </div>
-        <h3 className="text-2xl font-bold mb-4">Meet Your DOSTS</h3>
+        <h3 className="text-2xl font-bold mb-4 ml-2">Meet Your DOSTS</h3>
         <div className={`grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-4 ${theme === 'light' ? '' : 'text-black'}`}>
           <Link to="/notes" className="bg-yellow-100 p-4 rounded-3xl flex items-center shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400">
             <img src={card1} alt="Study Material DOST" className="w-40 h-40 mx-4" />
             <div>
-              <h4 className="text-sm font-semibold">Study Material DOST</h4>
+              <h4 className="text-2xl font-bold">Study Material DOST</h4>
             </div>
           </Link>
           <Link to="/practice-dost" className="bg-green-100 p-4 rounded-3xl flex items-center shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400">
@@ -73,7 +73,7 @@ function Dashboard() {
               <h4 className="text-sm font-semibold">Resource DOST</h4>
             </div>
           </Link>
-          <Link to="/dashboard/pdf" className="bg-indigo-50 p-4 rounded-3xl flex items-center shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400">
+          <Link to="/dashboard/pdf" className="bg-gradient-to-r from-violet-500 to-fuchsia-500 p-4 rounded-3xl flex items-center shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400">
             <img src={card6} alt="Speed Booster DOST" className="w-40 h-40 mx-4" />
             <div>
               <h4 className="text-sm font-semibold">Speed Booster DOST</h4>
