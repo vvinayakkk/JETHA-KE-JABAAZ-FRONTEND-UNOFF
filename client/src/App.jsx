@@ -15,6 +15,8 @@ import Notes from './pages/Notes';
 import Test from './pages/Test';
 import TestGenerate from './pages/TestGenerate';
 import Resource from './pages/Resource';
+import JoinRoomPage from './pages/JoinRoomPage';
+import JoinCallPage from './pages/JoinCallPage';
 
 function App() {
   const { user, ready } = useContext(UserContext);
@@ -37,6 +39,8 @@ function App() {
         <Route path="/test" element={user ? <Test /> : <Navigate to='/' replace />} />
         <Route path="/gentest" element={user ? <TestGenerate /> : <Navigate to='/' replace />} />
         <Route path="/resource" element={user ? <Resource /> : <Navigate to='/' replace />} />
+        <Route path='/joinroom' element={<JoinRoomPage/>}/>
+        <Route path='/room/:roomId' element={<JoinCallPage/>}/>
       </Routes>
   );
 }
