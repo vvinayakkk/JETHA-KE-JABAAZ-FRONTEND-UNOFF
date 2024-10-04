@@ -191,13 +191,18 @@ function Chat() {
             </div>
 
             <div className="mt-4 flex items-center justify-between">
-              <input
-                value={newMessageText}
-                type="text"
-                placeholder="Type a message"
-                onChange={(e) => setNewMessageText(e.target.value)}
-                className="flex-1 px-4 py-2 border border-gray-400 rounded focus:outline-none focus:border-blue-500"
-              />
+              <div className='flex w-full gap-2 items-center'>
+                <div className='rounded-full bg-white p-1'>
+                  <img src="./attach.svg" alt="" />
+                </div>
+                <input
+                  value={newMessageText}
+                  type="text"
+                  placeholder="Type a message"
+                  onChange={(e) => setNewMessageText(e.target.value)}
+                  className="flex-1 px-4 py-2 border border-gray-400 rounded focus:outline-none focus:border-blue-500 border-none rounded-2xl"
+                />
+              </div>
               <button onClick={sendMessage} className="ml-2 bg-blue-500 text-white p-2 rounded-lg">
                 <MdSend size={24} />
               </button>
