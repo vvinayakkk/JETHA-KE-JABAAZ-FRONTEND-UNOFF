@@ -1,9 +1,9 @@
 "use client";
 import { TextGenerateEffect } from "./pages/TextGenerate";
 
-const words = `Affordable Training for Tomorrow's Achievers`;
+const words = `{reply}`;
 
-export function TextGenerateEffectDemo({words}) {
+export function TextGenerateEffectDemo2() {
   return (
     <div className="text-purple-600"> 
       <TextGenerateEffect words={words} />

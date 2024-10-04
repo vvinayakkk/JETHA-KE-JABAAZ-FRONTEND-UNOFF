@@ -3,6 +3,7 @@ import ChatpdfSidebar from './ChatpdfSidebar';
 import { AiOutlineRobot } from "react-icons/ai";
 import axios from "axios";
 import { ThemeContext } from "../ThemeContext";
+import { TextGenerateEffectDemo } from "../GayabWords";
 
 function ChatPdf() {
   const { theme } = useContext(ThemeContext);
@@ -56,8 +57,9 @@ function ChatPdf() {
               Submit
             </button>
           </div>
-          <div className="mt-6 w-full max-w-md border p-2 bg-gray-100 rounded-md">
+          <div className="mt-6 w-full max-w-md border p-2 bg-">
             <p className="font-semibold m-1">Reply:</p>
+            <TextGenerateEffectDemo words={reply} />
             <p className="mt-2 text-md">{reply}</p>
           </div>
         </div>
