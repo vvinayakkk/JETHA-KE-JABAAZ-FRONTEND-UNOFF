@@ -149,39 +149,12 @@ const JoinCallPage = () => {
 
     return (
         <div className='flex flex-col justify-center items-center h-screen gap-8'>
-            <div ref={myMeeting} className='p-4 rounded-xl'></div>
-
-            {/* Start and Stop Audio Recording */}
-            <div className='flex gap-4 text-xl'>
+            <div ref={myMeeting} className='h-full w-full rounded-xl'></div>
+            {/* <div className='flex gap-4 text-xl'>
                 <button onClick={stopAudioRecording} className='bg-red-500 rounded-xl p-2'>Stop Recording</button>
                 <button onClick={playRecordedAudio} className='bg-green-500 rounded-xl p-2'>Play Recorded Audio</button>
-            </div>
-
-            {/* Start and Stop Transcription */}
-            <div className='flex gap-4 text-xl mt-4'>
-                <button 
-                    onClick={startSpeechRecognition} 
-                    className='bg-blue-500 rounded-xl p-2'
-                    disabled={isTranscribing} // Disable button when already transcribing
-                >
-                    Start Transcription
-                </button>
-                <button 
-                    onClick={stopSpeechRecognition} 
-                    className='bg-gray-500 rounded-xl p-2'
-                    disabled={!isTranscribing} // Disable button when not transcribing
-                >
-                    Stop Transcription
-                </button>
-            </div>
-
-            {/* Display the transcription */}
-            {transcription && (
-                <div className="transcription mt-4">
-                    <h2>Transcription:</h2>
-                    <p>{transcription}</p>
-                </div>
-            )}
+            </div> */}
+            {transcription && <div className="transcription">Transcription: {transcription}</div>}
         </div>
     );
 };
