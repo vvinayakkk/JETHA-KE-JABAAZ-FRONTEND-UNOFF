@@ -9,6 +9,7 @@ import background1 from '../assets/back1.jpg';
 import { FaUserCircle } from "react-icons/fa";
 import uniqBy from 'lodash/uniqBy'; 
 import { UserContext } from '../UserContext';
+import { useNavigate } from 'react-router-dom';
 function Chat() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const { user } = useContext(UserContext);
@@ -20,6 +21,8 @@ function Chat() {
   const divUnderMessages = useRef();
   const [loading, setLoading] = useState(true);
   const [onlinePeople, setOnlinePeople] = useState({});
+  const [showAttachMenu, setShowAttachMenu] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -109,6 +112,23 @@ function Chat() {
 
   const IdHex = Number(user.id).toString(16).padStart(24, '0');
 
+  const handleDocs = (e)=>{
+    e.preventDefault();
+    window.open('/document','_blank');
+  }
+
+  const handleMeet = ()=>{
+    navigate('/joinroom');
+  }
+
+  const handlePdfUpload =()=>{
+
+  }
+
+  const handleImageUpload = ()=>{
+    
+  }
+
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -168,7 +188,10 @@ function Chat() {
               ) : (
                 <FaUserCircle className="w-10 h-10 mr-4 text-gray-500" />
               )}
-              <h2 className="text-xl font-bold">{selectedUser.username}</h2>
+              <div className='flex w-full justify-between'>
+                <h2 className="text-xl font-bold">{selectedUser.username}</h2>
+                <button className='bg-gradient-to-r from-[#3793FF] to-[#0017E4] rounded-xl px-4 py-2' onClick={handleDocs}>Docs</button>
+              </div>
             </div>
             <div className="flex-1 bg-opacity-80 p-4 rounded-lg overflow-auto">
               {loading ? (
@@ -193,8 +216,39 @@ function Chat() {
             <div className="mt-4 flex items-center justify-between">
               <div className='flex w-full gap-2 items-center'>
                 <div className='rounded-full bg-white p-1'>
-                  <img src="./attach.svg" alt="" />
+                  <img src="./attach.svg" alt=""   onClick={() => setShowAttachMenu(!showAttachMenu)}/>
                 </div>
+                {showAttachMenu && (
+                  <div className="absolute bg-white border border-gray-300 p-4 bottom-12 rounded shadow-lg flex items-center gap-2">
+                    <div className='flex flex-col items-center text-sm'>
+                      <img 
+                        src="./imageupload.png" // Replace with your actual image source
+                        alt="Image 1"
+                        onClick={handleImageUpload}
+                        className="w-16 h-16 cursor-pointer"
+                      />
+                      <div>Image Upload</div>
+                    </div>
+                    <div className='flex flex-col items-center text-sm'>
+                      <img 
+                        src="./pdfupload.png" // Replace with your actual image source
+                        alt="Image 2"
+                        onClick={handlePdfUpload}
+                        className="w-16 h-16 cursor-pointer"
+                      />
+                      <div>Pdf Upload</div>
+                    </div>
+                    <div className='flex flex-col items-center text-sm'>
+                      <img 
+                        src="./google-meet.png" // Replace with your actual image source
+                        alt="Image 3"
+                        onClick={handleMeet}
+                        className="w-16 h-16 cursor-pointer"
+                      />
+                      <div>Meet</div>
+                    </div>
+                  </div>
+                )}
                 <input
                   value={newMessageText}
                   type="text"

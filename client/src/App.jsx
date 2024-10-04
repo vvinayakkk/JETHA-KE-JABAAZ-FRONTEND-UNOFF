@@ -18,7 +18,8 @@ import Resource from './pages/Resource';
 import JoinRoomPage from './pages/JoinRoomPage';
 import JoinCallPage from './pages/JoinCallPage';
 import Hero from './Hero';
-
+import TextEditor from './pages/TextEditor';
+import {v4 as uuidV4} from 'uuid'
 
 function App() {
   const { user, ready } = useContext(UserContext);
@@ -42,8 +43,10 @@ function App() {
         <Route path="/test" element={user ? <Test /> : <Navigate to='/' replace />} />
         <Route path="/gentest" element={user ? <TestGenerate /> : <Navigate to='/' replace />} />
         <Route path="/resource" element={user ? <Resource /> : <Navigate to='/' replace />} />
-        <Route path='/joinroom' element={<JoinRoomPage/>}/>
-        <Route path='/room/:roomId' element={<JoinCallPage/>}/>
+        <Route path="/joinroom" element={<JoinRoomPage/>}/>
+        <Route path="/room/:roomId" element={<JoinCallPage/>}/>
+        <Route path="/document" element={<Navigate to={`/documents/${uuidV4()}`}/>}/>
+        <Route path="/documents/:id" element={<TextEditor/>}/>
       </Routes>
   );
 }
