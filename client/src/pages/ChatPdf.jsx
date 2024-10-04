@@ -56,7 +56,7 @@ function ChatPdf() {
               Submit
             </button>
           </div>
-          <div className="mt-6 w-full max-w-md border p-2 bg-gradient-to-r rounded-md from-cyan-100 to-blue-300">
+          <div className="mt-6 w-full max-w-md border p-2 bg-gray-100 rounded-md">
             <p className="font-semibold m-1">Reply:</p>
             <p className="mt-2 text-md">{reply}</p>
           </div>

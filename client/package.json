@@ -10,29 +10,38 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/fiber": "^8.17.9",
+    "@tabler/icons-react": "^3.19.0",
+    "@tsparticles/engine": "^3.5.0",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.5.0",
     "@zegocloud/zego-uikit-prebuilt": "^2.10.0",
     "axios": "^1.7.2",
-    "framer-motion": "^11.3.2",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.11.1",
     "jwt-decode": "^4.0.0",
     "lodash": "^4.17.21",
+    "mini-svg-data-uri": "^1.4.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
-    "react-router-dom": "^6.24.1",
+    "react-router-dom": "^6.26.2",
     "react-tilt": "^1.0.2",
+    "tailwind-merge": "^2.5.3",
+    "three": "^0.169.0",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
-    "autoprefixer": "^10.4.19",
+    "autoprefixer": "^10.4.20",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.2",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
-    "postcss": "^8.4.39",
-    "tailwindcss": "^3.4.4",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
     "vite": "^5.3.1"
   }
 }

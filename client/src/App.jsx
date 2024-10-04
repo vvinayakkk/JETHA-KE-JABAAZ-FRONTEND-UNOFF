@@ -17,6 +17,8 @@ import TestGenerate from './pages/TestGenerate';
 import Resource from './pages/Resource';
 import JoinRoomPage from './pages/JoinRoomPage';
 import JoinCallPage from './pages/JoinCallPage';
+import Hero from './Hero';
+
 
 function App() {
   const { user, ready } = useContext(UserContext);
@@ -27,6 +29,7 @@ function App() {
 
   return (
       <Routes>
+       {/* <Route path='/' element={<Hero />} /> */}
         <Route path='/' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to='/' replace />} />
