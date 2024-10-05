@@ -122,11 +122,11 @@ function Chat() {
   }
 
   const handlePdfUpload =()=>{
-
+    navigate('/dashboard/pdf');
   }
 
   const handleImageUpload = ()=>{
-    
+    window.location.href = 'https://huggingface.co/spaces/vvinayakkk/eightTry';
   }
 
   return (

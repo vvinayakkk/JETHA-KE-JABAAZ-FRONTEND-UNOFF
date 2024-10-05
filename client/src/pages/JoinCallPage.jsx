@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { useParams } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
+import axios from 'axios';
 
 const supabaseUrl = 'https://ugpifdpzvmupzfdejpbv.supabase.co';
-const supabaseAnonKey = 'your_anon_key_here';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVncGlmZHB6dm11cHpmZGVqcGJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjgwMjgzNDEsImV4cCI6MjA0MzYwNDM0MX0.0PHU_w4FXGb_TOj5wYIIAHLtT1ficXlbOWMCuc7BJdw';
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-const JoinCallPage = () => {
+const JoinCallPage = async () => {
     const { roomId } = useParams();
     const mediaRecorderRef = useRef(null);
     const audioChunks = useRef([]);
@@ -83,11 +84,18 @@ const JoinCallPage = () => {
         const { data, error } = await supabase
             .storage
             .from('Audio')
-            .upload(fileName, audioBlob, {
+            .upload(fileName, roomId, user.id, audioBlob, {
                 cacheControl: '3600',
                 upsert: false,
                 contentType: 'audio/wav'
             });
+        
+            const response = await axios.post('/abusive', {
+                userId: user.user_id, // Corrected key and value pair
+                roomId: roomId,
+                audioBlob: audioBlob
+            });
+            
     
         if (error) {
             console.error('Error uploading audio to Supabase:', error.message);
