@@ -122,11 +122,11 @@ function Chat() {
   }
 
   const handlePdfUpload =()=>{
-
+    navigate('/dashboard/pdf');
   }
 
   const handleImageUpload = ()=>{
-    
+    window.location.href = 'https://huggingface.co/spaces/vvinayakkk/eightTry';
   }
 
   return (
@@ -254,7 +254,7 @@ function Chat() {
                   type="text"
                   placeholder="Type a message"
                   onChange={(e) => setNewMessageText(e.target.value)}
-                  className="flex-1 px-4 py-2 border border-gray-400 rounded focus:outline-none focus:border-blue-500 border-none rounded-2xl"
+                  className="flex-1 px-4 py-2 border border-gray-400 focus:outline-none focus:border-blue-500 border-none rounded-2xl"
                 />
               </div>
               <button onClick={sendMessage} className="ml-2 bg-blue-500 text-white p-2 rounded-lg">
