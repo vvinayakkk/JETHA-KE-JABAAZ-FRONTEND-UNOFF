@@ -58,8 +58,8 @@ function ChatPdf() {
             </button>
           </div>
           <div className="mt-6 w-full max-w-md border p-2 bg-">
-            <p className="font-semibold m-1">Reply:</p>
-            <TextGenerateEffectDemo words={reply} />
+            <p className="font-semibold m-1">Reply :</p>
+            {/* <TextGenerateEffectDemo words={reply} /> */}
             <p className="mt-2 text-md">{reply}</p>
           </div>
         </div>

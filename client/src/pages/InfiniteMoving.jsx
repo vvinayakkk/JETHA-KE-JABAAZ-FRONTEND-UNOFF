@@ -22,6 +22,7 @@ export const InfiniteMovingCards = ({
     if (containerRef.current && scrollerRef.current) {
       const scrollerContent = Array.from(scrollerRef.current.children);
 
+      // Duplicate items for seamless scrolling
       scrollerContent.forEach((item) => {
         const duplicatedItem = item.cloneNode(true);
         scrollerRef.current.appendChild(duplicatedItem);
@@ -50,23 +51,34 @@ export const InfiniteMovingCards = ({
     <div
       ref={containerRef}
       className={cn(
-        "scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+        "scroller relative z-20 max-w-7xl overflow-hidden",
         className
       )}
+      style={{
+        animation: start
+          ? `scroll ${containerRef.current?.style.getPropertyValue('--animation-duration')} linear infinite`
+          : 'none',
+      }}
     >
       <ul
         ref={scrollerRef}
         className={cn(
           "flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap",
-          start && "animate-scroll",
           pauseOnHover && "hover:[animation-play-state:paused]",
           direction === "right" ? "reverse" : ""
         )}
+        style={{
+          display: 'flex',
+          animation: start
+            ? `scroll ${containerRef.current?.style.getPropertyValue('--animation-duration')} linear infinite`
+            : 'none',
+          transform: direction === "left" ? "translateX(0)" : "translateX(100%)",
+        }}
       >
         {items.map((item) => (
           <li
             key={item.name}
-            className="w-[350px] max-w-full relative rounded-2xl border border-b-0 flex-shrink-0 border-slate-700 px-8 py-6 md:w-[450px]"
+            className="w-[350px] max-w-full relative rounded-2xl border border-b-0 flex-shrink-0 border-slate-700 px-8 py-6 md:w-[450px] transition duration-300 ease-in-out hover:bg-green-500"
             style={{
               background: "linear-gradient(180deg, var(--slate-800), var(--slate-900))",
             }}

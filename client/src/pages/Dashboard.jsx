@@ -93,7 +93,7 @@ function Dashboard() {
           <Link to="/notes" className="bg-gradient-to-br from-[#A531DC] to-[#4300B1]  hover:bg-orange-500 p-4 rounded-3xl flex items-center shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400">
             <img src={card1} alt="Study Material DOST" className="w-40 h-40 mx-4" />
             <div>
-              <h4 className="text-2xl font-bold text-white">Study Material DOST</h4>
+              <h4 className="text-2xl font-bold text-white">My Notes</h4>
             </div>
           </Link>
           </Tilt>

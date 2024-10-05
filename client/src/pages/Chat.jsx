@@ -132,7 +132,7 @@ function Chat() {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="w-1/4 bg-gradient-to-tr from-cyan-200 via-purple-300 to-violet-400 p-4">
+      <div className="w-1/4 bg-gradient-to-tr from-gray-100  to-gray-200 p-4">
         <div className="w-full flex justify-between">
           <input
             type="text"
@@ -147,7 +147,7 @@ function Chat() {
           {users.map((user, index) => (
             <li
               key={index}
-              className={`flex items-center p-2 bg-gray-200 rounded-lg mb-2 cursor-pointer hover:bg-gray-300 ${selectedUser && selectedUser.id === user.id ? 'bg-gray-400' : ''}`}
+              className={`flex items-center p-2 bg-gray-200 rounded-lg mb-2 cursor-pointer hover:bg-gray-200 ${selectedUser && selectedUser.id === user.id ? 'bg-gray-100 border-[0.1px] border-gray-300' : ''}`}
               onClick={() => setSelectedUser(user)}
             >
               <div className="relative">
@@ -174,7 +174,7 @@ function Chat() {
       <div className={`flex-1 flex flex-col p-4 relative ${theme === 'light' ? '' : 'bg-black text-white'}`}>
         <div
           className={`absolute inset-0 bg-cover bg-center ${theme === 'light' ? 'opacity-40' : 'opacity-30'}`}
-          style={{ backgroundImage: theme === 'light' ? `url(${Background})` : `url(${background1})` }}
+          // style={{ backgroundImage: theme === 'light' ? `url(${Background})` : `url(${background1})` }}
         ></div>
         {selectedUser ? (
           <div className="relative flex flex-col h-full">
@@ -190,7 +190,7 @@ function Chat() {
               )}
               <div className='flex w-full justify-between'>
                 <h2 className="text-xl font-bold">{selectedUser.username}</h2>
-                <button className='bg-gradient-to-r from-[#3793FF] to-[#0017E4] rounded-xl px-4 py-2' onClick={handleDocs}>Docs</button>
+                <button className='bg-gradient-to-r from-[#56df53] to-[#01f06d] rounded-xl px-4 py-2' onClick={handleDocs}>Docs</button>
               </div>
             </div>
             <div className="flex-1 bg-opacity-80 p-4 rounded-lg overflow-auto">
@@ -203,7 +203,7 @@ function Chat() {
                     className={`flex mb-4 ${msg.sender.toString() === IdHex.toString() ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`bg-gradient-to-r border ${msg.sender.toString() === IdHex.toString() ? 'from-green-300 to-green-100 text-black' : 'from-blue-500 to-cyan-200 text-black'} p-2 rounded-xl w-auto max-w-xs`}
+                      className={`bg-gradient-to-r border ${msg.sender.toString() === IdHex.toString() ? 'from-green-300 to-green-200 text-black' : 'from-gray-200 to-gray-300 text-black'} p-2 rounded-xl w-auto max-w-xs`}
                     >
                       {msg.text}
                     </div>
@@ -257,7 +257,7 @@ function Chat() {
                   className="flex-1 px-4 py-2 border border-gray-400 focus:outline-none focus:border-blue-500 border-none rounded-2xl"
                 />
               </div>
-              <button onClick={sendMessage} className="ml-2 bg-blue-500 text-white p-2 rounded-lg">
+              <button onClick={sendMessage} className="ml-2 bg-green-500 text-white p-2 rounded-xl">
                 <MdSend size={24} />
               </button>
             </div>
