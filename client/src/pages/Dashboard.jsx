@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import SideBarComp from './SideBarComp';
 import card1 from '../assets/card1.svg';
@@ -12,6 +12,10 @@ import { ThemeContext } from '../ThemeContext';
 import Chatbot from './Chatbot';
 import { Tilt } from 'react-tilt'
 import { BackgroundGradientAnimationDemo } from '../Back';
+import { UserContext } from '../UserContext';
+import FlipCard from './FlipCard';
+import ConnectionCard from './ConnectionCard';
+import axios from 'axios';
 
 const defaultOptions = {
 	reverse:        false,  // reverse the tilt direction
@@ -24,21 +28,46 @@ const defaultOptions = {
 	reset:          true,    // If the tilt effect has to be reset on exit.
 	easing:         "cubic-bezier(.03,.98,.52,.99)",    // Easing on enter/exit.
 }
+
 function Dashboard() {
-  const { theme } = useContext(ThemeContext);
+  const { theme} = useContext(ThemeContext);
+  const {user} = useContext(UserContext);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [friends, setFriends] = useState([]);
 
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
   };
 
+  useEffect(() => {
+    fetchFriends();
+  }, []);
+
+  async function fetchFriends() {
+    const res = await axios.get('http://localhost:8000/profile/', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    if (res.data) {
+      
+      setFriends(res.data.user.friends);
+      const friendRequests = res.data.user.received_friend_requests
+      .filter(req => req.status === 'pending') 
+      .map(req => ({
+        id: req.id,
+        sender: req.sender
+      }));
+    }
+  }
+
   return (
     <div className="flex font-[Inter] font-semibold">
       <SideBarComp />
-      <div className={`p-4 w-full mt-[76px] ${theme === 'light' ? '' : 'bg-black text-white'}`}>
+      <div className={`p-4 w-full flex flex-col mt-[76px] ${theme === 'light' ? '' : 'bg-black text-white'}`}>
         {/* Upper Section */}
        
-        <div className="bg-orange-600 rounded-2xl p-6 mb-6 flex flex-col items-center md:flex-row">
+      <div className="bg-orange-600 rounded-2xl p-6 mb-6 flex flex-col gap-2 items-center md:flex-row">
         
           <div className="text-center md:text-left md:flex-1 ml-8 ">
             <h2 className="text-white text-3xl font-bold mb-2">Test series (New Syllabus)</h2>
@@ -58,8 +87,9 @@ function Dashboard() {
           </div>
         </div>
         <h3 className="text-2xl font-bold mb-4 ml-2">Meet Your DOSTS 👋</h3>
-        <div className={`grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-4 ${theme === 'light' ? '' : 'text-black'}`}>
-        <Tilt options={defaultOptions} style={{ height: 60, width: 420 }}>
+        {!user.is_mentor && (
+          <div className={`grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-4 ${theme === 'light' ? '' : 'text-black'}`}>
+          <Tilt options={defaultOptions} style={{ height: 60, width: 420 }}>
           <Link to="/notes" className="bg-gradient-to-br from-[#A531DC] to-[#4300B1]  hover:bg-orange-500 p-4 rounded-3xl flex items-center shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400">
             <img src={card1} alt="Study Material DOST" className="w-40 h-40 mx-4" />
             <div>
@@ -75,20 +105,21 @@ function Dashboard() {
             </div>
           </Link>
           </Tilt>
-          <Link to="/connect" className="bg-gradient-to-br from-[#3793FF] to-[#0017E4] p-4 rounded-3xl flex items-center shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400">
-            <img src={card3} alt="Formula Sheet DOST" className="w-40 h-40 mx-4" />
-            <div>
-              <h4 className="text-2xl font-bold text-white">Connect with your DOST</h4>
-            </div>
-          </Link>
-        </div>
-        <div className={`grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${theme === 'light' ? '' : 'text-black'}`}>
           <Link to="/chat" className="bg-gradient-to-br from-[#FFD439] to-[#FF7A00] p-4 rounded-3xl flex items-center shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400">
             <img src={card4} alt="Backlog Remover DOST" className="w-40 h-40 mx-4" />
             <div>
               <h4 className="text-2xl font-bold text-white">Talk to your DOST</h4>
             </div>
           </Link>
+        </div>)} 
+        <div className={`grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${theme === 'light' ? '' : 'text-black'}`}>
+          <Link to="/connect" className="bg-gradient-to-br from-[#3793FF] to-[#0017E4] p-4 rounded-3xl flex items-center shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400">
+            <img src={card3} alt="Formula Sheet DOST" className="w-40 h-40 mx-4" />
+            <div>
+              <h4 className="text-2xl font-bold text-white">Connect with your DOST</h4>
+            </div>
+          </Link>
+          
           <Link to="/resource" className="bg-gradient-to-br from-[#FFED46] to-[#FF7EC7] p-4 rounded-3xl flex items-center shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400">
             <img src={card5} alt="Revision DOST" className="w-40 h-40 mx-4" />
             <div>
@@ -102,6 +133,18 @@ function Dashboard() {
             </div>
           </Link>
         </div>
+        <div> 
+          <h3 className="text-2xl font-bold mb-4 ml-2">Meet Your Connections 👋</h3>
+          <div className={`grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-4 ${theme === 'light' ? '' : 'text-black'}`}>
+            {friends.length === 0 ? (
+              <p>No friends found</p>
+            ) : (
+              friends.map((friend) => (
+                <ConnectionCard key={friend.id} user={friend} />
+              ))           
+            )}
+          </div>
+      </div>
       </div>
       <div>
         <button onClick={toggleChat} className="fixed bottom-4 right-4 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-300">
@@ -111,6 +154,7 @@ function Dashboard() {
         </button>
         {isChatOpen && <Chatbot />}
       </div>
+      
     </div>
   );
 }

@@ -166,7 +166,7 @@ const Profile = () => {
         {/* Friend Requests */}
         <div className="w-full max-w-2xl">
           <div className='shadow-lg rounded-xl border p-4 mb-10'>
-            <h2 className="text-2xl font-bold mb-4 text-center text-orange-600">Friend Requests</h2>
+            <h2 className="text-2xl font-bold mb-4 text-center text-orange-600">Pending Requests</h2>
             <div className="p-4 rounded-lg">
               <div className={`${friReq.length > 0 ? 'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4' : 'flex items-center justify-center'}`}>
                 {friReq.length > 0 ? (
@@ -174,7 +174,7 @@ const Profile = () => {
                     <FriendCard1 key={fri.id} user={fri} isRequest={true} ReqAccept={() => handleAccept(fri.id)} ReqDecline={() => handleDecline(fri.id)} />
                   ))
                 ) : (
-                  <div className='p-3 rounded-xl bg-orange-400 inline-block'><p className='flex gap-2 text-lg font-semibold'><PiEmptyFill size={30} className='' />No friend requests</p></div>
+                  <div className='p-3 rounded-xl bg-orange-400 inline-block'><p className='flex gap-2 text-lg font-semibold'><PiEmptyFill size={30} className='' />No requests</p></div>
                 )}
               </div>
             </div>
@@ -184,7 +184,7 @@ const Profile = () => {
         {/* Friends List */}
         <div className="w-full max-w-2xl">
           <div className='shadow-lg rounded-xl border p-4'>
-            <h2 className="text-2xl font-bold mb-4 text-center text-orange-600">Friends</h2>
+            <h2 className="text-2xl font-bold mb-4 text-center text-orange-600">Connections</h2>
             <div className="p-4 rounded-lg">
               <div className={`${friends.length > 0 ? 'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4' : 'flex items-center justify-center'}`}>
                 {friends.length > 0 ? (
@@ -192,7 +192,7 @@ const Profile = () => {
                     <FriendCard key={index} user={friend} isRequest={false} />
                   ))
                 ) : (
-                  <div className='p-3 rounded-xl bg-orange-400 inline-block'><p className='flex gap-2 text-lg font-semibold'><PiEmptyFill size={30} className='' />No friends to show</p></div>
+                  <div className='p-3 rounded-xl bg-orange-400 inline-block'><p className='flex gap-2 text-lg font-semibold'><PiEmptyFill size={30} className='' />No connections</p></div>
                 )}
               </div>
             </div>
