@@ -26,8 +26,8 @@ function Sidebar({ children, isOpen, toggleSidebar }) {
                         </div>
                     </div>
                     <div className="flex justify-end">
-                        <button onClick={toggleSidebar} className="p-1.5 rounded-lg m-4 hover:bg-gray-100">
-                            {expanded ? <AiOutlineMenuUnfold /> : <AiOutlineMenuFold />  }
+                        <button onClick={toggleSidebar} className="p-1.5 rounded-lg m-4 hover:bg-gray-100 ">
+                            {expanded ? <AiOutlineMenuUnfold className="left-0" style={{fontSize:'32px'}} /> : <AiOutlineMenuFold style={{fontSize:'32px'}} />  }
                         </button>
                     </div>
                     <SidebarContext.Provider value={{ expanded }}>

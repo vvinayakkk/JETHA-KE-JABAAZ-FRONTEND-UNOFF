@@ -8,6 +8,7 @@ import EditNotes from './EditNotes';
 import { HiFolderPlus } from "react-icons/hi2";
 import ShareNotes from './ShareNotes';
 import DisplayNote from './DisplayNote';
+import { IoMdInformationCircle } from "react-icons/io";
 
 function Notes() {
   const [notes, setNotes] = useState([]);
@@ -16,6 +17,8 @@ function Notes() {
   const [editNote, setEditNote] = useState(null);
   const [popShare, setPopShare] = useState(false);
   const [popNote, setPopNote] = useState(false);
+  const [isPopupVisible, setIsPopupVisible] = useState(true); // Popup visible on load
+  const [popupTimeout, setPopupTimeout] = useState(null); // Timeout reference
 
   const handleUpdate = () => {
     setPopEdit(!popEdit);
@@ -46,7 +49,7 @@ function Notes() {
         fetchNotes();
       }
     } catch (error) {
-      console.error('Error deleting note:', error);
+      console.error('Error deleting note.');
     }
   };
 
@@ -54,6 +57,7 @@ function Notes() {
     setEditNote(note);
     setPopEdit(true);
   };
+
   const handleClick = (note) => {
     setEditNote(note);
     setPopNote(true);
@@ -61,6 +65,21 @@ function Notes() {
 
   const handlePop = () => {
     setPop(!pop);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupVisible(false);
+    if (popupTimeout) {
+      clearTimeout(popupTimeout);
+    }
+  };
+
+  const handleShowPopupAgain = () => {
+    setIsPopupVisible(true);
+    const timeout = setTimeout(() => {
+      setIsPopupVisible(false);
+    }, 30000); // 30 seconds
+    setPopupTimeout(timeout);
   };
 
   const fetchNotes = async () => {
@@ -74,24 +93,29 @@ function Notes() {
         setNotes(res.data);
       }
     } catch (error) {
-      console.error('Error fetching notes:', error);
+      console.error('Error fetching notes.');
     }
-  };
-
-  const handleShare = (note) => {
-    setEditNote(note);
-    setPopShare(true);
   };
 
   useEffect(() => {
     fetchNotes();
+
+    // Automatically display the popup on component mount and hide it after 30 seconds
+    const timeout = setTimeout(() => {
+      setIsPopupVisible(false);
+    }, 30000); // 30 seconds
+    setPopupTimeout(timeout);
+
+    return () => {
+      clearTimeout(timeout); // Cleanup on unmount
+    };
   }, []);
 
   return (
     <div className="flex h-screen">
       <SideBarComp />
       <div className="flex-1 p-6 mt-24">
-        <div className='flex items-center justify-center'>
+        <div className='flex items-center justify-center relative'>
           <div onClick={handlePop} className="bg-gray-100 w-1/2 text-black p-4 rounded-xl flex items-center justify-center shadow-none transition-shadow duration-300 cursor-pointer hover:shadow-lg hover:shadow-gray-400">
             <HiFolderPlus size={40} className="mr-4 text-blue-600" />
             <div>
@@ -99,7 +123,39 @@ function Notes() {
             </div>
           </div>
         </div>
+
+        {/* Auto-Appearing Popup */}
+        {isPopupVisible && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="w-96 p-6 bg-white border border-gray-300 shadow-lg rounded-lg relative">
+              <h3 className="text-lg font-semibold">Study Material Dost</h3>
+              <p className="mt-2 text-gray-600">
+                Study Material Dost provides curated educational content for competitive exams like NEET, JEE, and CET, with resources such as practice tests, video lectures, and topic-specific study notes.
+              </p>
+              <button 
+                className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
+                onClick={handleClosePopup}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Button to Show the Popup Again */}
+        {!isPopupVisible && (
+          <div className="flex justify-center mt-8">
+            <button 
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+              onClick={handleShowPopupAgain}
+            >
+              Show Info Again
+            </button>
+          </div>
+        )}
+
         {pop && <PopUpNotes handleClose={handlePop} notes={fetchNotes} />}
+        
         <div className="w-full flex justify-center">
           <div className="max-w-6xl w-full p-4">
             <h2 className="text-2xl font-semibold mt-8 mb-4 text-center text-orange-500">My Notes</h2>
@@ -115,7 +171,7 @@ function Notes() {
                 />
               )) :
                 <div className='flex items-center justify-center rounded-lg p-4'>
-                  <div className=''>
+                  <div>
                     <FaLightbulb size={180} className='font-bold text-center mb-4' />
                     <p className='text-center font-light'>Notes you add appear here</p>
                   </div>
@@ -123,6 +179,7 @@ function Notes() {
             </div>
           </div>
         </div>
+
         {popEdit && <EditNotes note={editNote} handleClose={handleUpdate} handleEdit={fetchNotes} />}
         {popShare && <ShareNotes note={editNote} handleClose={handleSh} handleEdit={fetchNotes} />}
         {popNote && <DisplayNote handleClose={handleNotes} note={editNote} />}

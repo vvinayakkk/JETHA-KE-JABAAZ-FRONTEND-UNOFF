@@ -5,8 +5,8 @@ import { InfiniteMovingCards } from "./pages/InfiniteMoving";
 
 export function InfiniteMovingCardsDemo() {
   return (
-    <div className="h-[40rem] rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
-      <InfiniteMovingCards items={testimonials} direction="right" speed="slow" />
+    <div className="h-[40rem] rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05]  items-center justify-center relative overflow-hidden">
+      <InfiniteMovingCards items={testimonials} direction="right" speed="slow"  />
     </div>
   );
 }
@@ -14,33 +14,34 @@ export function InfiniteMovingCardsDemo() {
 const testimonials = [
     {
       quote:
-        "I never knew a product could be this effective! It has transformed my daily routine and improved my overall experience. Highly recommend it!",
-      name: "Rahul Sharma",
-      title: "Satisfied Customer",
+        "MyBuddy connected me with an amazing mentor who helped me understand difficult concepts for NEET! I felt more confident and prepared.",
+      name: "Riya Singh",
+      title: "Aspiring Doctor",
     },
     {
       quote:
-        "The quality of this product exceeded my expectations. It's not only functional but also stylish. Kudos to the team for such a fantastic job!",
-      name: "Priya Gupta",
-      title: "Fashion Enthusiast",
+        "The support I received through MyBuddy was incredible! I got the guidance I needed for JEE preparation and improved my scores significantly.",
+      name: "Karan Mehta",
+      title: "Engineering Aspirant",
     },
     {
       quote:
-        "I am extremely happy with my purchase. It has truly made my life easier. I can't imagine going back to how things were before!",
-      name: "Amit Desai",
-      title: "Daily User",
+        "I was struggling with CET topics, but thanks to MyBuddy, I found a perfect tutor who made learning enjoyable. Highly recommend it!",
+      name: "Anita Verma",
+      title: "CET Candidate",
     },
     {
       quote:
-        "A fantastic product that delivers on its promises! I've seen a noticeable difference since I started using it. Will definitely buy again.",
-      name: "Sneha Iyer",
-      title: "Health Advocate",
+        "MyBuddy is a lifesaver! The audio analysis feature helped me improve my conversation skills with my mentor. I feel much more prepared now.",
+      name: "Vikash Kumar",
+      title: "Future Engineer",
     },
     {
       quote:
-        "This is a game-changer! The features are well thought out, and the performance is top-notch. Highly recommend it to everyone!",
-      name: "Vikram Rao",
-      title: "Tech Savvy",
+        "The app helped me connect with a college student who had just taken the NEET. Their tips were invaluable! My study sessions are now more effective.",
+      name: "Sneha Patil",
+      title: "NEET Aspirant",
     },
-  ];
+];
+
   

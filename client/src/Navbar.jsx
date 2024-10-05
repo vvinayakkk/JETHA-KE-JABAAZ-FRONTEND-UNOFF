@@ -7,17 +7,17 @@ export function FloatingNavDemo() {
     {
       name: "Home",
       link: "/",
-      icon: <IconHome className="h-5 w-5" />,
+      icon: <IconHome className="h-7 w-7" />,
     },
     {
       name: "About",
       link: "/about",
-      icon: <IconUser className="h-5 w-5" />,
+      icon: <IconUser className="h-7 w-7" />,
     },
     {
       name: "Contact",
       link: "/contact",
-      icon: <IconMessage className="h-5 w-5" />,
+      icon: <IconMessage className="h-7 w-7" />,
     },
   ];
 

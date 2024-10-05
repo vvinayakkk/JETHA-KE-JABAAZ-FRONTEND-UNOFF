@@ -36,7 +36,7 @@ export const TextGenerateEffect = ({
           return (
             <motion.span
               key={word + idx}
-              className="dark:text-purple-200 text-black opacity-0 text-3xl" // Start with invisible words
+              className="dark:text-purple-500 text-black opacity-0 text-3xl" // Start with invisible words
               style={{
                 filter: filter ? "blur(10px)" : "none", // Apply initial blur if needed
               }}

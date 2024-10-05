@@ -40,8 +40,10 @@ function App() {
 
   return (
     <div className={`app-container ${direction}`}>
+      
       <Routes location={location} key={location.key}>
-        <Route path='/' element={<Login onNavigate={() => handleNavigate('/register')} />} />
+        <Route path="/" element={<Hero/>}/>
+        <Route path='/login' element={<Login onNavigate={() => handleNavigate('/register')} />} />
         <Route path='/register' element={<Register onNavigate={() => handleNavigate('/')} />} />
         <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to='/' replace />} />
         <Route path="/dashboard/pdf" element={user ? <ChatPDF /> : <Navigate to='/' replace />} />
